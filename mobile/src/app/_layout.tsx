@@ -8,6 +8,7 @@ import {
     Roboto_500Medium,
     Roboto_400Regular,
   } from "@expo-google-fonts/roboto"
+import { Loading } from "../components/loading";
 
 export default function Layout() {
 
@@ -17,14 +18,11 @@ export default function Layout() {
         Roboto_400Regular,
       })
 
-      if (!fontsLoaded) {
-        return 
-      }
-
     return (
         <>
-            <StatusBar style="light"/>        
-            <Slot />   
+            <StatusBar style="light"/>     
+            {fontsLoaded ? <Slot />   : <Loading />}   
+             
         </>
     )
 }
