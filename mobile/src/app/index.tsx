@@ -4,10 +4,13 @@ import { Input } from "@/components/input"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 import { colors } from "@/styles/colors"
 import { Button } from "@/components/button"
+import { Link } from "expo-router"
 
 export default function Home(){
     return(        
         <View className="flex-1 bg-green-500 items-center justify-center p-8">
+            {/* <StatusBar style="light"/>   */}
+            <StatusBar barStyle="light-content"/>  
              <Image
                 source={require("@/assets/logo.png")}
                 className="h-16"
@@ -24,7 +27,14 @@ export default function Home(){
                     <Input.Field placeholder="Código do ingresso" />
                 </Input>    
 
-                <Button title="Acessar credencial" />   
+                <Button title="Acessar credencial" />  
+
+                   <Link
+                        href="/register"
+                        className="text-gray-100 text-base font-bold text-center mt-8"
+                    >
+                         Ainda não possui ingresso?
+                    </Link> 
                          
             </View>
 
