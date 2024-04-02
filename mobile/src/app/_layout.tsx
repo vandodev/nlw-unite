@@ -1,4 +1,4 @@
-import "../styles/global.css"
+import "@/styles/global.css"
 import {StatusBar} from "expo-status-bar"
 import {Slot} from "expo-router";
 
@@ -8,7 +8,7 @@ import {
     Roboto_500Medium,
     Roboto_400Regular,
   } from "@expo-google-fonts/roboto"
-import { Loading } from "../components/loading";
+import { Loading } from "@/components/loading";
 
 export default function Layout() {
 
