@@ -17,6 +17,8 @@ export default function Register() {
     if (!name.trim() || !email.trim()) {
       return Alert.alert("Inscrição", "Preencha todos os campos!")
     }
+
+    router.push("/ticket")
   }
  
   return (
