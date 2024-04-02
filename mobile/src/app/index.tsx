@@ -1,4 +1,5 @@
-import { View, Image, StatusBar } from "react-native"
+import { useState } from "react"
+import { View, Image, StatusBar, Alert } from "react-native"
 import { Input } from "@/components/input"
 
 import { MaterialCommunityIcons } from "@expo/vector-icons"
@@ -7,6 +8,16 @@ import { Button } from "@/components/button"
 import { Link } from "expo-router"
 
 export default function Home(){
+    const [code, setCode] = useState("")
+
+    function handleAccessCredential() {
+        // console.warn(code)
+
+        if (!code.trim()) {
+            return Alert.alert("Ingresso", "Informe o código do ingresso!")
+          }
+    }
+
     return(        
         <View className="flex-1 bg-green-500 items-center justify-center p-8">
             {/* <StatusBar style="light"/>   */}
@@ -24,10 +35,10 @@ export default function Home(){
                         color={colors.green[200]}
                         size={20}
                     />
-                    <Input.Field placeholder="Código do ingresso" />
+                    <Input.Field placeholder="Código do ingresso" onChangeText={setCode}/>
                 </Input>    
 
-                <Button title="Acessar credencial" />  
+                <Button title="Acessar credencial" onPress={handleAccessCredential}/>  
 
                    <Link
                         href="/register"
