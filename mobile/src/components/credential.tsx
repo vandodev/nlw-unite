@@ -1,6 +1,7 @@
 import { View, Image,Text, ImageBackground, TouchableOpacity } from "react-native";
 import { Feather } from "@expo/vector-icons"
 import { colors } from "@/styles/colors"
+import { QRCode } from "./qrcode";
 
 type Props = {
     image?: string
@@ -48,10 +49,7 @@ export function Credential({onChangeAvatar, image }: Props){
                 <Text className="font-bold text-2xl text-zinc-50 mt-4">Evandro oliveira</Text>
                 <Text className="font-regular text-base text-zinc-300 mb-4">vandoaparecido@hotmail.com</Text>
 
-                <Image
-                    source={require("@/assets/ticket/qrcode.png")}
-                    className="w-32 h-32"
-                />
+                <QRCode value="Teste" size={120} />
 
                 <TouchableOpacity activeOpacity={0.7} className="mt-6">
                     <Text className="font-body text-orange-500 text-sm">Ampliar qrcode</Text>
