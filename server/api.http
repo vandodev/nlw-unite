@@ -16,3 +16,7 @@ Content-Type: application/json
   "name": "Israel Oliveira",
   "email": "israel@hotmail.com"
 }
+
+###
+
+GET http://localhost:3333/events/0ce0abb8-7137-4350-beed-aead10545dc4
