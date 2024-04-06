@@ -13,6 +13,6 @@ POST http://localhost:3333/events/0ce0abb8-7137-4350-beed-aead10545dc4/attendees
 Content-Type: application/json
 
 {
-  "name": "Evandro Oliveira",
-  "email": "vandoaparecido@hotmail.com"
+  "name": "Israel Oliveira",
+  "email": "israel@hotmail.com"
 }
