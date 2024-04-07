@@ -4,7 +4,7 @@ Content-Type: application/json
 {
   "title": "nlw unite",
   "details": null,
-  "maximumAttendees": 1
+  "maximumAttendees": 2
 }
 
 ###
@@ -28,3 +28,7 @@ GET http://localhost:3333/attendees/1/badge
 ###
 
 GET http://localhost:3333/attendees/1/check-in
+
+###
+
+GET http://localhost:3333/events/0ce0abb8-7137-4350-beed-aead10545dc4/attendees
