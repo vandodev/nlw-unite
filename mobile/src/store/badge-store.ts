@@ -14,15 +14,15 @@ export type BadgeStore = {
 type StateProps = {
   data: BadgeStore | null
   save: (data: BadgeStore) => void
-//   remove: () => void
-//   updateAvatar: (uri: string) => void
 }
 
-export const useBadgeStore = create<StateProps>(
+export const useBadgeStore = create( persist<StateProps>(
     (set) => ({
       data: null,
 
       save: (data: BadgeStore) => set(() => ({ data })),
     }  
-  )
-)
+  ),{
+    name: "nlw-unite:badge",
+    storage: createJSONStorage(() => AsyncStorage),
+  }))
