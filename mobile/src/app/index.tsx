@@ -5,7 +5,7 @@ import { Input } from "@/components/input"
 import { MaterialCommunityIcons } from "@expo/vector-icons"
 import { colors } from "@/styles/colors"
 import { Button } from "@/components/button"
-import { Link } from "expo-router"
+import { Link, Redirect  } from "expo-router"
 import { api } from "@/server/api"
 import { useBadgeStore } from "@/store/badge-store"
 
@@ -32,6 +32,10 @@ export default function Home(){
             setIsLoading(false)
             Alert.alert("Ingresso", "Ingresso não encontrado!")
         }
+    }
+
+    if (badgeStore.data?.checkInURL) {
+        return <Redirect href="/ticket" />
     }
 
     return(        
