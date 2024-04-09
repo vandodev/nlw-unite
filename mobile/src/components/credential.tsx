@@ -2,14 +2,16 @@ import { View, Image,Text, ImageBackground, TouchableOpacity } from "react-nativ
 import { Feather } from "@expo/vector-icons"
 import { colors } from "@/styles/colors"
 import { QRCode } from "./qrcode";
+import { BadgeStore } from "@/store/badge-store"
 
 type Props = {
+    data: BadgeStore
     image?: string
     onChangeAvatar?: () => void
     onExpandQRCode?: () => void
   }
 
-export function Credential({onChangeAvatar, image, onExpandQRCode }: Props){
+export function Credential({onChangeAvatar,data, image, onExpandQRCode }: Props){
     return(
         <View className="w-full self-stretch items-center">
             <Image
@@ -24,9 +26,9 @@ export function Credential({onChangeAvatar, image, onExpandQRCode }: Props){
                     >
                     <View className="w-full flex-row items-center justify-between">
                         <Text className="text-zinc-50 text-sm font-bold">
-                         Unite Submit
+                             {data.eventTitle}
                         </Text>
-                        <Text className="text-zinc-50 text-sm font-bold">#123</Text>
+                        <Text className="text-zinc-50 text-sm font-bold">#{data.id}</Text>
                     </View>
 
                     <View className="w-40 h-40 bg-black rounded-full" />
@@ -47,10 +49,10 @@ export function Credential({onChangeAvatar, image, onExpandQRCode }: Props){
                     </TouchableOpacity>
                 )}
 
-                <Text className="font-bold text-2xl text-zinc-50 mt-4">Evandro oliveira</Text>
-                <Text className="font-regular text-base text-zinc-300 mb-4">vandoaparecido@hotmail.com</Text>
+                <Text className="font-bold text-2xl text-zinc-50 mt-4"> {data.name}</Text>
+                <Text className="font-regular text-base text-zinc-300 mb-4">{data.email}</Text>
 
-                <QRCode value="Teste" size={120} />
+                <QRCode value={data.checkInURL} size={120} />
 
                 <TouchableOpacity activeOpacity={0.7} className="mt-6" onPress={onExpandQRCode}>
                     <Text className="font-body text-orange-500 text-sm">Ampliar qrcode</Text>

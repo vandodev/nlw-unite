@@ -49,6 +49,7 @@ export default function Ticket() {
             >
                 {/* <Credential image="https://github.com/vandodev.png"/> */}
                 <Credential
+                    data={badgeStore.data}
                     image={image}
                     onChangeAvatar={handleSelectImage}
                     onExpandQRCode={() => setExpandQRCode(true)}
@@ -66,7 +67,8 @@ export default function Ticket() {
                 </Text>
 
                 <Text className="text-white font-regular text-base mt-1 mb-6">
-                    Mostre ao mundo que você vai participar do evento{" "}          
+                    Mostre ao mundo que você vai participar do evento{" "}
+                    {badgeStore.data.eventTitle}!         
                 </Text>
 
                 <Button title="Compartilhar" />
