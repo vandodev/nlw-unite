@@ -3,22 +3,51 @@ import { View, Image, StatusBar, Alert } from "react-native"
 import { FontAwesome6, MaterialIcons } from "@expo/vector-icons"
 import { Link, router } from "expo-router"
 import { colors } from "@/styles/colors"
-
+import axios from "axios"
 
 import { Input } from "@/components/input"
 import { Button } from "@/components/button"
+import { api } from "@/server/api"
 
+
+const EVENT_ID = "dc8ccb07-ad81-467a-8859-df6c14446e8f"
 
 export default function Register() {
   const [name, setName] = useState("")
   const [email, setEmail] = useState("")
+  const [isLoading, setIsLoading] = useState(false)
 
   async function handleRegister() {
-    if (!name.trim() || !email.trim()) {
-      return Alert.alert("Inscrição", "Preencha todos os campos!")
-    }
+    try {
+      if (!name.trim() || !email.trim()) {
+        return Alert.alert("Inscrição", "Preencha todos os campos!")
+      }
 
-    router.push("/ticket")
+      setIsLoading(true)
+
+      const registerResponse = await api.post(`/events/${EVENT_ID}/attendees`, {
+        name,
+        email,
+      })
+
+      if (registerResponse.data.attendeeId) {
+        Alert.alert("Inscrição", "Inscrição realizada com sucesso!", [
+          { text: "OK", onPress: () => router.push("/ticket") },
+        ])
+      }
+
+    }catch(error) {
+      console.log(error)
+
+      if (axios.isAxiosError(error)) {
+        if (String(error.response?.data.message).includes("already registered")){
+          return Alert.alert("Inscrição", "Este e-mail já está cadastrado!")
+        }
+      }
+      Alert.alert("Inscrição", "Este e-mail já está cadastrado!")
+    }finally {
+      setIsLoading(false)
+    }
   }
  
   return (
@@ -57,6 +86,7 @@ export default function Register() {
         <Button
           title="Realizar inscrição"
           onPress={handleRegister}
+          isLoading={isLoading}
         />
 
         <Link
