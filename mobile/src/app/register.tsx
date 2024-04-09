@@ -38,6 +38,7 @@ export default function Register() {
 
     }catch(error) {
       console.log(error)
+      setIsLoading(false)
 
       if (axios.isAxiosError(error)) {
         if (String(error.response?.data.message).includes("already registered")){
@@ -45,8 +46,6 @@ export default function Register() {
         }
       }
       Alert.alert("Inscrição", "Este e-mail já está cadastrado!")
-    }finally {
-      setIsLoading(false)
     }
   }
  
