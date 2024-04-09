@@ -7,10 +7,14 @@ import { Button } from "@/components/button"
 import { useState } from "react"
 import * as ImagePicker from "expo-image-picker"
 import { QRCode } from "@/components/qrcode"
+import { useBadgeStore } from "@/store/badge-store"
+import { Redirect } from "expo-router"
 
 export default function Ticket() {
     const [image, setImage] = useState("")
     const [expandQRCode, setExpandQRCode] = useState(false)
+
+    const badgeStore = useBadgeStore()
 
     async function handleSelectImage() {
         try {
@@ -27,6 +31,10 @@ export default function Ticket() {
             console.log(error)
             Alert.alert("Foto", "Não foi possível selecionar a imagem.")
           }
+    }
+
+    if (!badgeStore.data?.checkInURL) {
+        return <Redirect href="/" />
     }
 
     return(
@@ -66,6 +74,7 @@ export default function Ticket() {
                 <TouchableOpacity
                     className="mt-10"
                     activeOpacity={0.7}
+                    onPress={() => badgeStore.remove()}
                     >
                     <Text className="text-base text-white font-bold text-center">
                         Remover Ingresso
