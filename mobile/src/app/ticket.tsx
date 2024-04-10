@@ -1,6 +1,15 @@
 import { Credential } from "@/components/credential"
 import { Header } from "@/components/header"
-import {View,Text,StatusBar,ScrollView, TouchableOpacity, Alert, Modal} from "react-native"
+import {
+    View,
+    Text,
+    StatusBar,
+    ScrollView,
+    TouchableOpacity,
+    Alert,
+    Modal,
+    Share
+} from "react-native"
 import { FontAwesome } from "@expo/vector-icons"
 import { colors } from "@/styles/colors"
 import { Button } from "@/components/button"
@@ -11,10 +20,22 @@ import { useBadgeStore } from "@/store/badge-store"
 import { Redirect } from "expo-router"
 
 export default function Ticket() {
-    const [image, setImage] = useState("")
     const [expandQRCode, setExpandQRCode] = useState(false)
 
     const badgeStore = useBadgeStore()
+
+    async function handleShare() {
+        try {
+          if (badgeStore.data?.checkInURL) {
+            await Share.share({
+              message: badgeStore.data.checkInURL,
+            })
+          }
+        } catch (error) {
+          console.log(error)
+          Alert.alert("Compartilhar", "Não foi possível compartilhar.")
+        }
+      }
 
     async function handleSelectImage() {
         try {
@@ -25,7 +46,7 @@ export default function Ticket() {
             })
       
             if (result.assets) {
-              setImage(result.assets[0].uri)
+                badgeStore.updateAvatar(result.assets[0].uri)
             }
           } catch (error) {
             console.log(error)
@@ -50,7 +71,6 @@ export default function Ticket() {
                 {/* <Credential image="https://github.com/vandodev.png"/> */}
                 <Credential
                     data={badgeStore.data}
-                    image={image}
                     onChangeAvatar={handleSelectImage}
                     onExpandQRCode={() => setExpandQRCode(true)}
                  />
@@ -71,7 +91,7 @@ export default function Ticket() {
                     {badgeStore.data.eventTitle}!         
                 </Text>
 
-                <Button title="Compartilhar" />
+                <Button title="Compartilhar"  onPress={handleShare}  />
 
                 <TouchableOpacity
                     className="mt-10"
