@@ -65,9 +65,9 @@ import { IconButton } from './icon-button';
                     <td className="py-3 px-4 text-sm text-zinc-300">7 dias atrás</td>
                     <td className="py-3 px-4 text-sm text-zinc-300">3 dias atrás</td>
                     <td className="py-3 px-4 text-sm text-zinc-300">
-                      <button className="bg-black/20 border border-white/10 rounded-md p-1.5">
+                     <IconButton transparent={true}> 
                         <MoreHorizontal className="size-4" />
-                      </button>
+                      </IconButton>
                     </td>
                   </tr>
                 );
