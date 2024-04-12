@@ -29,7 +29,8 @@ interface Attendee {
 }
 
   export function AttendeeList() {
-    const [page, setPage] = useState(1)
+    // const [page, setPage] = useState(1)
+    const page = 1
     const [total, setTotal] = useState(0);
     const [attendees, setAttendees] = useState<Attendee[]>([]);
     const totalPages = Math.ceil(total / 10) 
@@ -56,23 +57,26 @@ interface Attendee {
 
     function onSearchInputChanged(event: ChangeEvent<HTMLInputElement>) {
       setSearch(event.target.value);
-      setPage(1);
+     // setPage(1);
     }  
 
     function goToFirstPage() {
-      setPage(1);
+     // setPage(1);
     }
 
     function goToLastPage() {
-      setPage(totalPages);
+      //setPage(totalPages);
     }
 
     function goToNextPage() {
-      setPage(page + 1);
+      // setPage(page + 1);
+      const searhParams = new URLSearchParams(window.location.search)
+      searhParams.set('page', String(page + 1))
+      window.location.search = searhParams.toString()
     }
 
     function goToPreviousPage() {
-      setPage(page - 1);
+      //setPage(page - 1);
     }
 
     return (
