@@ -31,7 +31,8 @@ interface Attendee {
   export function AttendeeList() {
     const [page, setPage] = useState(1)
     const [attendees, setAttendees] = useState<Attendee[]>([]);
-    const totalPages = Math.ceil(attendees.length / 10) 
+    const [total, setTotal] = useState(0);
+    const totalPages = Math.ceil(total / 10) 
 
     useEffect(() => {
       const url = new URL(
@@ -42,7 +43,7 @@ interface Attendee {
         .then((response) => response.json())
         .then((data) => {
           setAttendees(data.attendees);
-          // setTotal(data.total);
+          setTotal(data.total);
         });
     }, [page]);
   
@@ -134,7 +135,7 @@ interface Attendee {
             <tfoot>
               <tr>
                 <TableCell colSpan={3}>
-                  Mostrando 10 de {attendees.length} itens
+                  Mostrando 10 de {total} itens
                 </TableCell>
                 <TableCell colSpan={3}>
                   <div className="inline-flex items-center gap-8">
