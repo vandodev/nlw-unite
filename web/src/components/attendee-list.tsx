@@ -113,7 +113,15 @@ interface Attendee {
                       </div>
                     </TableCell>
                     <TableCell>{dayjs().to(ateendee.createdAt)}</TableCell>
-                    <TableCell>{dayjs().to(ateendee.checkedInAt)}</TableCell>
+                    
+                    <TableCell>
+                      {ateendee.checkedInAt === null ? (
+                        <span className="text-zinc-400">Não fez check-in</span>
+                      ) : (
+                        dayjs().to(ateendee.checkedInAt)
+                      )}
+                    </TableCell>
+                    
                     <TableCell>
                      <IconButton transparent={true}> 
                         <MoreHorizontal className="size-4" />
