@@ -70,9 +70,9 @@ interface Attendee {
 
     function goToNextPage() {
       // setPage(page + 1);
-      const searhParams = new URLSearchParams(window.location.search)
-      searhParams.set('page', String(page + 1))
-      window.location.search = searhParams.toString()
+      const url = new URL(window.location.toString())
+      url.searchParams.set('page', String(page + 1))
+      window.history.pushState({}, "", url)
     }
 
     function goToPreviousPage() {
