@@ -12,6 +12,12 @@ import { TableHeader } from './table/table-header';
 import { TableCell } from './table/table-cell';
 import { TableRow } from './table/table-row';
 import { attendees } from "../data/attendees";
+import dayjs from "dayjs";
+import "dayjs/locale/pt-br";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime);
+dayjs.locale("pt-br");
 
   export function AttendeeList() {
     return (
@@ -62,8 +68,8 @@ import { attendees } from "../data/attendees";
                         <span>{ateendee.email}</span>
                       </div>
                     </TableCell>
-                    <TableCell>{ateendee.createdAt.toISOString()}</TableCell>
-                    <TableCell>{ateendee.createdAt.toISOString()}</TableCell>
+                    <TableCell>{dayjs().to(ateendee.createdAt)}</TableCell>
+                    <TableCell>{dayjs().to(ateendee.checkedInAt)}</TableCell>
                     <TableCell>
                      <IconButton transparent={true}> 
                         <MoreHorizontal className="size-4" />
