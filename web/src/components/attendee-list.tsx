@@ -11,7 +11,8 @@ import { Table } from './table/table';
 import { TableHeader } from './table/table-header';
 import { TableCell } from './table/table-cell';
 import { TableRow } from './table/table-row';
-  
+import { attendees } from "../data/attendees";
+
   export function AttendeeList() {
     return (
       <div className="flex flex-col gap-4">
@@ -46,23 +47,23 @@ import { TableRow } from './table/table-row';
               </tr>
             </thead>
             <tbody>
-              {Array.from({ length: 8 }).map((_, i) => {
+            {attendees.map((ateendee) => {
                 return (
-                  <TableRow key={i}>
+                  <TableRow key={ateendee.id}>
                     <TableCell>
                       <input type="checkbox" className="size-4 bg-black/20 rounded border border-white/10" />
                     </TableCell>
-                    <TableCell>12383</TableCell>
+                    <TableCell>{ateendee.id}</TableCell>
                     <TableCell>
                       <div className="flex flex-col gap-1">
                         <span className="font-semibold text-white">
-                          Evandro Oliveira
+                          {ateendee.name}
                         </span>
-                        <span>vandoaparecido@hotmail.com</span>
+                        <span>{ateendee.email}</span>
                       </div>
                     </TableCell>
-                    <TableCell>7 dias atrás</TableCell>
-                    <TableCell>3 dias atrás</TableCell>
+                    <TableCell>{ateendee.createdAt.toISOString()}</TableCell>
+                    <TableCell>{ateendee.createdAt.toISOString()}</TableCell>
                     <TableCell>
                      <IconButton transparent={true}> 
                         <MoreHorizontal className="size-4" />
