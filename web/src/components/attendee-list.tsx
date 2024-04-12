@@ -15,7 +15,7 @@ import { TableRow } from './table/table-row';
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { useEffect, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from "react";
 
 dayjs.extend(relativeTime);
 dayjs.locale("pt-br");
@@ -33,11 +33,18 @@ interface Attendee {
     const [total, setTotal] = useState(0);
     const [attendees, setAttendees] = useState<Attendee[]>([]);
     const totalPages = Math.ceil(total / 10) 
+    const [search, setSearch] = useState("")
 
     useEffect(() => {
+     
       const url = new URL(
-       `http://localhost:3333/events/dc8ccb07-ad81-467a-8859-df6c14446e8f/attendees?pageIdex=${page -1}`
-      );  
+        "http://localhost:3333/events/dc8ccb07-ad81-467a-8859-df6c14446e8f/attendees"
+      );
+  
+      url.searchParams.set("pageIndex", String(page - 1));
+      if (search.length > 1) {
+        url.searchParams.set("query", search);
+      }
          
       fetch(url)
         .then((response) => response.json())
@@ -45,8 +52,12 @@ interface Attendee {
           setAttendees(data.attendees);
           setTotal(data.total);
         });
-    }, [page]);
-  
+    }, [page, search]);
+
+    function onSearchInputChanged(event: ChangeEvent<HTMLInputElement>) {
+      setSearch(event.target.value);
+      setPage(1);
+    }  
 
     function goToFirstPage() {
       setPage(1);
@@ -73,6 +84,8 @@ interface Attendee {
             <input
               className="bg-transparent flex-1 outline-none border-0 p-0 text-sm"
               placeholder="Buscar participante..."
+              value={search}
+              onChange={onSearchInputChanged}
             />
           </div>
         </div>
