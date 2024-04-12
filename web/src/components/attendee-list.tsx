@@ -11,18 +11,41 @@ import { Table } from './table/table';
 import { TableHeader } from './table/table-header';
 import { TableCell } from './table/table-cell';
 import { TableRow } from './table/table-row';
-import { attendees } from "../data/attendees";
+// import { attendees } from "../data/attendees";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 dayjs.extend(relativeTime);
 dayjs.locale("pt-br");
 
+interface Attendee {
+  id: string;
+  name: string;
+  email: string;
+  createdAt: string;
+  checkedInAt: string | null;
+}
+
   export function AttendeeList() {
     const [page, setPage] = useState(1)
-    const totalPages = Math.ceil(attendees.length)
+    const [attendees, setAttendees] = useState<Attendee[]>([]);
+    const totalPages = Math.ceil(attendees.length / 10) 
+
+    useEffect(() => {
+      const url = new URL(
+        "http://localhost:3333/events/dc8ccb07-ad81-467a-8859-df6c14446e8f/attendees"
+      );  
+      
+      fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+          setAttendees(data.attendees);
+          // setTotal(data.total);
+        });
+    }, [page]);
+  
 
     function goToFirstPage() {
       setPage(1);
@@ -74,7 +97,7 @@ dayjs.locale("pt-br");
             </thead>
             <tbody>
             {/* {attendees.slice(page  * 10,(page + 1) * 10).map((ateendee) => { */}
-            {attendees.slice((page -1) * 10,page * 10).map((ateendee) => {
+            {attendees.map((ateendee) => {
                 return (
                   <TableRow key={ateendee.id}>
                     <TableCell>
