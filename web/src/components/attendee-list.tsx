@@ -15,11 +15,31 @@ import { attendees } from "../data/attendees";
 import dayjs from "dayjs";
 import "dayjs/locale/pt-br";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { useState } from 'react';
 
 dayjs.extend(relativeTime);
 dayjs.locale("pt-br");
 
   export function AttendeeList() {
+    const [page, setPage] = useState(1)
+    const totalPages = Math.ceil(attendees.length)
+
+    function goToFirstPage() {
+      setPage(1);
+    }
+
+    function goToLastPage() {
+      setPage(totalPages);
+    }
+
+    function goToNextPage() {
+      setPage(page + 1);
+    }
+
+    function goToPreviousPage() {
+      setPage(page - 1);
+    }
+
     return (
       <div className="flex flex-col gap-4">
         <div className="flex gap-3 items-center">
@@ -53,7 +73,8 @@ dayjs.locale("pt-br");
               </tr>
             </thead>
             <tbody>
-            {attendees.map((ateendee) => {
+            {/* {attendees.slice(page  * 10,(page + 1) * 10).map((ateendee) => { */}
+            {attendees.slice((page -1) * 10,page * 10).map((ateendee) => {
                 return (
                   <TableRow key={ateendee.id}>
                     <TableCell>
@@ -82,23 +103,38 @@ dayjs.locale("pt-br");
             <tfoot>
               <tr>
                 <TableCell colSpan={3}>
-                  Mostrando 10 de 228 itens
+                  Mostrando 10 de {attendees.length} itens
                 </TableCell>
                 <TableCell colSpan={3}>
                   <div className="inline-flex items-center gap-8">
-                    <span>Página 1 de 23</span>
+                    <span>Página {page} de {totalPages} </span>
   
                     <div className="flex gap-1.5">
-                      <IconButton>
+                      <IconButton 
+                        onClick={goToFirstPage}
+                        disabled={page === 1}
+                      >
                         <ChevronsLeft className="size-4" />
                       </IconButton>
-                      <IconButton>
+
+                      <IconButton 
+                        onClick={goToPreviousPage} 
+                        disabled={page === 1}
+                      >
                         <ChevronLeft className="size-4" />
                       </IconButton>
-                      <IconButton>
+
+                      <IconButton
+                        onClick={goToNextPage}
+                        disabled={page === totalPages}
+                      >
                         <ChevronRight className="size-4" />
                       </IconButton>
-                      <IconButton>
+
+                      <IconButton
+                        onClick={goToLastPage}
+                        disabled={page === totalPages}
+                      >
                         <ChevronsRight className="size-4" />
                       </IconButton>
                     </div>
