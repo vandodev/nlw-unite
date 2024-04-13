@@ -64,8 +64,8 @@ interface Attendee {
     }, [page, search]);
 
     function onSearchInputChanged(event: ChangeEvent<HTMLInputElement>) {
-      setSearch(event.target.value);
-     setCurrentPage(1)
+      setCurrentSearch(event.target.value);
+      setCurrentPage(1)
     }  
 
     function goToFirstPage() {
@@ -89,6 +89,13 @@ interface Attendee {
       url.searchParams.set("page", String(page));
       window.history.pushState({}, "", url);
       setPage(page);
+    }
+
+     function setCurrentSearch(search: string) {
+      const url = new URL(window.location.toString());
+      url.searchParams.set("search", search);
+      window.history.pushState({}, "", url);
+      setSearch(search);
     }
 
     return (
