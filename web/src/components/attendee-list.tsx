@@ -32,7 +32,14 @@ interface Attendee {
     const [total, setTotal] = useState(0);
     const [attendees, setAttendees] = useState<Attendee[]>([]);
     const totalPages = Math.ceil(total / 10) 
-    const [search, setSearch] = useState("")
+    
+    const [search, setSearch] = useState(() => {
+      const url = new URL(window.location.toString());
+      if (url.searchParams.has("search")) {
+        return url.searchParams.get("search") ?? "";
+      }
+      return "";
+    });
 
     const [page, setPage] = useState(() => {
       const url = new URL(window.location.toString());
